@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import QuestionItem from "./QuestionItem"
 
-function QuestionList({questionList, setQuestionList}) {
+function QuestionList({questionList, setQuestionList, handleAnswerChange}) {
  
 
 useEffect(()=>{
@@ -17,14 +17,20 @@ function handleDelete(e){
         "Content-Type": "application/json"
       }
     })
-    const newQuestList = questionList.filter((question)=>question.id!==e.target.id);
+   .then (r => {
+     console.log(e.target.id)
+    const newQuestList = questionList.filter((question) => {
+      console.log(question.id, e.target.id)
+      return question.id !== parseInt(e.target.id)
+    });
+    console.log(newQuestList)
     setQuestionList(newQuestList)
-    
+   })
 }
 
 const thisQuestionList = questionList.map((question)=>{
   return(
-    <QuestionItem question={question} id={question.id} key={question.id} handleDelete={handleDelete}/>
+    <QuestionItem question={question} id={question.id} key={question.id} handleDelete={handleDelete} handleAnswerChange={handleAnswerChange}/>
   )
 })
   

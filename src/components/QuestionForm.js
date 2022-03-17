@@ -15,7 +15,7 @@ function QuestionForm(props) {
       ...formData,
       [event.target.name]: event.target.value,
     });
-    console.log(formData)
+
   }
 
   function handleSubmit(event) {
@@ -37,13 +37,13 @@ function QuestionForm(props) {
       
     })
       .then((r)=>r.json())
-      .then((data)=> props.setQuestionList(data))
+      .then((data)=> props.setQuestionList([...props.questionList, data]))
     }
 
   return (
     <section>
       <h1>New Question</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id={formData.id}>
         <label>
           Prompt:
           <input
